@@ -5,6 +5,9 @@ const ProductSchema = new mongoose.Schema(
     depth: {
       type: Number,
     },
+    type: {
+      type: String,
+    },
     title: {
       type: String,
     },

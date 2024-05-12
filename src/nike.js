@@ -7,9 +7,9 @@ import Product from './models/product.js';
 dotenv.config();
 main();
 
-function main() {
-  connectDB();
-  // saveSaleProducts();
+async function main() {
+  await connectDB();
+  await saveSaleProducts();
   disconnectDB();
 }
 
@@ -59,6 +59,7 @@ async function saveSaleProducts() {
 
         const savedProduct = await Product.create({
           depth: 0,
+          type: product.productType,
           title: product.title,
           subtitle: product.subtitle,
           price: price,
