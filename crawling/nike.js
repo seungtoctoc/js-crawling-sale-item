@@ -1,34 +1,14 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 
 import Product from '../models/product.js';
+import { connectDB, disconnectDB } from '../utils/database.js';
 
-dotenv.config();
 main();
 
 async function main() {
   await connectDB();
-  await saveSaleProducts();
+  // await saveSaleProducts();
   disconnectDB();
-}
-
-async function connectDB() {
-  try {
-    await mongoose.connect(process.env.MONGO, { dbName: 'Sales' });
-    console.log('db connected');
-  } catch (err) {
-    console.log('error in connectDB, ', err);
-  }
-}
-
-function disconnectDB() {
-  try {
-    mongoose.disconnect();
-    console.log('db disconnected');
-  } catch (err) {
-    console.log('error in disconnectDB, ', err);
-  }
 }
 
 async function saveSaleProducts() {
