@@ -2,13 +2,10 @@ import mongoose from 'mongoose';
 
 const ProductSchema = new mongoose.Schema(
   {
-    depth: {
-      type: Number,
-    },
-    type: {
+    brand: {
       type: String,
     },
-    brand: {
+    type: {
       type: String,
     },
     title: {
@@ -37,16 +34,53 @@ const ProductSchema = new mongoose.Schema(
     color: {
       type: String,
     },
-    colorways: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: 'Product',
-      },
-    ],
   },
   { timestamps: true }
 );
 
 const Product = mongoose.model('Product', ProductSchema);
+
+export async function saveProduct(
+  brand,
+  type,
+  title,
+  subtitle,
+  currentPrice,
+  fullPrice,
+  imageUrl,
+  link,
+  color
+) {
+  const discountRate = (fullPrice - currentPrice) / fullPrice;
+
+  try {
+    const savedProduct = await Product.create({
+      brand: brand,
+      type: type,
+      title: title,
+      subtitle: subtitle,
+      price: {
+        currentPrice: currentPrice,
+        fullPrice: fullPrice,
+        discountRate: discountRate,
+      },
+      imageUrl: imageUrl,
+      link: link,
+      color: color,
+    });
+
+    return savedProduct;
+  } catch (err) {
+    throw new Error('save error');
+  }
+}
+
+export async function deleteProductOfBrand(brand) {
+  try {
+    Product.deleteMany({ brand: brand });
+  } catch (err) {
+    throw new Error('delete error');
+  }
+}
 
 export default Product;

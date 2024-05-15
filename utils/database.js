@@ -8,7 +8,7 @@ export async function connectDB() {
     await mongoose.connect(process.env.MONGO, { dbName: 'Sales' });
     console.log('db connected');
   } catch (err) {
-    console.log('error in connectDB, ', err);
+    throw new Error('db connect error');
   }
 }
 
@@ -17,6 +17,6 @@ export function disconnectDB() {
     mongoose.disconnect();
     console.log('db disconnected');
   } catch (err) {
-    console.log('error in disconnectDB, ', err);
+    throw new Error('db disconnect error');
   }
 }
