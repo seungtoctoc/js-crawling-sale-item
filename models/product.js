@@ -75,12 +75,12 @@ export async function saveProduct(
   }
 }
 
-export async function deleteProductOfBrand(brand) {
+export const deleteProductOfBrand = async (brand) => {
   try {
     Product.deleteMany({ brand: brand });
   } catch (err) {
     throw new Error('delete error');
   }
-}
+};
 
 export default Product;

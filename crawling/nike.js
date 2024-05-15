@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 import { connectDB, disconnectDB } from '../utils/database.js';
-import { saveProduct, deleteProductWithBrand } from '../models/product.js';
+import { saveProduct, deleteProductOfBrand } from '../models/product.js';
 
 main();
 
-async function main() {
+const main = async () => {
   try {
     await connectDB();
     await deleteProductOfBrand('NIKE');
@@ -14,9 +14,9 @@ async function main() {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-async function saveSaleProducts() {
+const saveSaleProducts = async () => {
   try {
     let urlCount = 0;
     let savedCount = 0;
@@ -76,14 +76,14 @@ async function saveSaleProducts() {
     console.log(err);
     disconnectDB();
   }
-}
+};
 
-function getLinkUrl(url) {
+const getLinkUrl = (url) => {
   return url.replace('{countryLang}', 'nike.com/kr');
-}
+};
 
-function getUrl(times) {
+const getUrl = (times) => {
   return `https://api.nike.com/cic/browse/v2?queryid=products&anonymousId=F72981C21DDC9AFA274B18AEE626CED4&country=kr&endpoint=%2Fproduct_feed%2Frollup_threads%2Fv2%3Ffilter%3Dmarketplace(KR)%26filter%3Dlanguage(ko)%26filter%3DemployeePrice(true)%26filter%3DattributeIds(5b21a62a-0503-400c-8336-3ccfbff2a684)%26anchor%3D${
     24 * times
   }%26consumerChannelId%3Dd9a5bc42-4b9c-4976-858a-f159cf99c647%26count%3D24&language=ko&localizedRangeStr=%7BlowestPrice%7D%20~%20%7BhighestPrice%7D`;
-}
+};
