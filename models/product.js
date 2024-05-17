@@ -51,7 +51,7 @@ export async function saveProduct(
   link,
   color
 ) {
-  const discountRate = (fullPrice - currentPrice) / fullPrice;
+  const discountRate = ((fullPrice - currentPrice) / fullPrice).toFixed(2);
 
   try {
     const savedProduct = await Product.create({
@@ -71,15 +71,16 @@ export async function saveProduct(
 
     return savedProduct;
   } catch (err) {
-    throw new Error('save error');
+    throw new Error('error in saving products.\n' + err);
   }
 }
 
 export const deleteProductOfBrand = async (brand) => {
   try {
-    Product.deleteMany({ brand: brand });
+    await Product.deleteMany({ brand: brand });
+    console.log('deleted products of ', brand);
   } catch (err) {
-    throw new Error('delete error');
+    throw new Error('error in deleting Product of Brand.\n' + err);
   }
 };
 

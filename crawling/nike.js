@@ -2,14 +2,21 @@ import axios from 'axios';
 
 import { connectDB, disconnectDB } from '../utils/database.js';
 import { saveProduct, deleteProductOfBrand } from '../models/product.js';
-
-main();
+import {
+  deleteSortedProducts,
+  updateSortedProducts,
+} from '../models/sortedProducts.js';
 
 const main = async () => {
   try {
     await connectDB();
+
     await deleteProductOfBrand('NIKE');
     await saveSaleProducts();
+
+    await deleteSortedProducts();
+    await updateSortedProducts();
+
     disconnectDB();
   } catch (err) {
     console.log(err);
@@ -29,11 +36,11 @@ const saveSaleProducts = async () => {
       for (const product of products) {
         await saveProduct(
           'NIKE',
-          product.type,
+          product.productType,
           product.title,
           product.subtitle,
-          product.currentPrice,
-          product.fullPrice,
+          product.price.currentPrice,
+          product.price.fullPrice,
           product.images.squarishURL,
           getLinkUrl(product.url),
           product.colorDescription
@@ -46,11 +53,11 @@ const saveSaleProducts = async () => {
           for (const colorway of colorways) {
             await saveProduct(
               'NIKE',
-              product.type,
+              product.productType,
               product.title,
               product.subtitle,
-              colorway.currentPrice,
-              colorway.fullPrice,
+              colorway.price.currentPrice,
+              colorway.price.fullPrice,
               colorway.images.squarishURL,
               getLinkUrl(product.url),
               colorway.colorDescription
@@ -87,3 +94,5 @@ const getUrl = (times) => {
     24 * times
   }%26consumerChannelId%3Dd9a5bc42-4b9c-4976-858a-f159cf99c647%26count%3D24&language=ko&localizedRangeStr=%7BlowestPrice%7D%20~%20%7BhighestPrice%7D`;
 };
+
+main();
