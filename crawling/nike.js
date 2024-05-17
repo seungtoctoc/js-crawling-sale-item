@@ -51,6 +51,10 @@ const saveSaleProducts = async () => {
           const colorways = product.colorways;
 
           for (const colorway of colorways) {
+            if (colorway.colorDescription === product.colorDescription) {
+              continue;
+            }
+
             await saveProduct(
               'NIKE',
               product.productType,
