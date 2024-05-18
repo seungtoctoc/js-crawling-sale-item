@@ -11,8 +11,8 @@ const main = async () => {
   try {
     await connectDB();
 
-    await deleteProductOfBrand('NIKE');
-    await saveSaleProducts();
+    // await deleteProductOfBrand('NIKE');
+    // await saveSaleProducts();
 
     await deleteSortedProducts();
     await updateSortedProducts();

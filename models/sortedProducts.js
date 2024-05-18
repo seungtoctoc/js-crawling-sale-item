@@ -37,27 +37,27 @@ export const updateSortedProducts = async () => {
     console.log('deleted sorted products');
 
     // default : 다른 브랜드도 섞어줘야 함.
-    const defaultIds = await Product.find({}).select('_id');
+    const defaultIds = await Product.find({}).select('_id').lean();
     await saveSortedProducts('default', defaultIds);
     console.log('saved default sorted products');
 
     // low price
     const lowPriceIds = await Product.find({})
-      .sort({ currentPrice: 1 })
+      .sort({ 'price.currentPrice': 1 })
       .select('_id');
     await saveSortedProducts('lowPrice', lowPriceIds);
     console.log('saved low price sorted products');
 
     // high price
     const highPriceIds = await Product.find({})
-      .sort({ currentPrice: -1 })
+      .sort({ 'price.currentPrice': -1 })
       .select('_id');
     await saveSortedProducts('highPrice', highPriceIds);
     console.log('saved high price sorted products');
 
     // high discount rate
     const highDiscountRateIds = await Product.find({})
-      .sort({ discountRate: -1 })
+      .sort({ 'price.discountRate': -1 })
       .select('_id');
     await saveSortedProducts('highDiscountRate', highDiscountRateIds);
     console.log('saved high discount rate sorted products');

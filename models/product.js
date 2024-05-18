@@ -51,7 +51,7 @@ export async function saveProduct(
   link,
   color
 ) {
-  const discountRate = ((fullPrice - currentPrice) / fullPrice).toFixed(2);
+  const discountRate = (fullPrice - currentPrice) / fullPrice;
 
   try {
     const savedProduct = await Product.create({
