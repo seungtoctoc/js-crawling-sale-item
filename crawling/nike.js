@@ -11,8 +11,8 @@ const main = async () => {
   try {
     await connectDB();
 
-    // await deleteProductOfBrand('NIKE');
-    // await saveSaleProducts();
+    await deleteProductOfBrand('NIKE');
+    await saveSaleProducts();
 
     await deleteSortedProducts();
     await updateSortedProducts();
@@ -74,11 +74,6 @@ const saveSaleProducts = async () => {
       console.log('saved ' + savedCount + ' items');
 
       if (products.length < 24) {
-        break;
-      }
-
-      // test
-      if (savedCount > 20) {
         break;
       }
     }
