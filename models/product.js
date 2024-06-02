@@ -34,6 +34,9 @@ const ProductSchema = new mongoose.Schema(
     color: {
       type: String,
     },
+    sortOrder: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
@@ -49,9 +52,10 @@ export async function saveProduct(
   fullPrice,
   imageUrl,
   link,
-  color
+  color,
+  sortOrder
 ) {
-  const discountRate = (fullPrice - currentPrice) / fullPrice;
+  const discountRate = Math.round((fullPrice - currentPrice) / fullPrice);
 
   try {
     const savedProduct = await Product.create({
@@ -67,6 +71,7 @@ export async function saveProduct(
       imageUrl: imageUrl,
       link: link,
       color: color,
+      sortOrder: sortOrder,
     });
 
     return savedProduct;
